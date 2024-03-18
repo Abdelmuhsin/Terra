@@ -72,19 +72,19 @@ resource "aws_route_table" "pvt-pr-rt" {
 }
 
 # rt pub asoc
- aws_network_aclresource "aws_route_table_association" "pr-pub-asoc" {
+resource "aws_route_table_association" "pr-pub-asoc" {
   subnet_id      = aws_subnet.web-sub.id
   route_table_id = aws_route_table.pub-pr-rt.id
 }
 
-# rt api asoc
- aws_network_aclresource "aws_route_table_association" "pr-api-asoc" {
+# rt api as
+ resource "aws_route_table_association" "pr-api-asoc" {
   subnet_id      = aws_subnet.api-sub.id
   route_table_id = aws_route_table.pub-pr-rt.id
 }
 
 # rt db asoc
- aws_network_aclresource "aws_route_table_association" "pr-db-asoc" {
+ resource "aws_route_table_association" "pr-db-asoc" {
   subnet_id      = aws_subnet.db-sub.id
   route_table_id = aws_route_table.pvt-pr-rt.id
 }
