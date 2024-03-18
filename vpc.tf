@@ -88,3 +88,30 @@ resource "aws_route_table_association" "pr-pub-asoc" {
   subnet_id      = aws_subnet.db-sub.id
   route_table_id = aws_route_table.pvt-pr-rt.id
 }
+
+# nacl
+resource "aws_network_acl" "pr-nacl" {
+  vpc_id = aws_vpc.pr.id
+
+  # Rules for inbound traffic (ingress)
+  ingress {
+    rule_number   = 100
+    protocol      = "tcp"
+    action        = "allow"
+    cidr_block    = "0.0.0.0/0"
+    from_port     = 0
+    to_port       = 65535
+  }
+
+  # Rules for outbound traffic (egress)
+  egress {
+    rule_number   = 100
+    protocol      = "tcp"
+    action        = "allow"
+    cidr_block    = "0.0.0.0/0"
+    from_port     = 0
+    to_port       = 65535
+  }
+
+  # Additional rules can be defined as needed
+}
