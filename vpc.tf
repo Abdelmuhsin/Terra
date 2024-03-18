@@ -95,7 +95,7 @@ resource "aws_network_acl" "pr-nacl" {
 
   # Rules for inbound traffic (ingress)
   ingress {
-    rule_number   = 100
+    rule_no  = 100
     protocol      = "tcp"
     action        = "allow"
     cidr_block    = "0.0.0.0/0"
@@ -105,7 +105,7 @@ resource "aws_network_acl" "pr-nacl" {
 
   # Rules for outbound traffic (egress)
   egress {
-    rule_number   = 100
+    rule_no  = 100
     protocol      = "tcp"
     action        = "allow"
     cidr_block    = "0.0.0.0/0"
