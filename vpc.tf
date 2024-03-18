@@ -56,6 +56,7 @@ resource "aws_internet_gateway" "pr-gw" {
     cidr_block = "10.0.0.0/0"
     gateway_id = aws_internet_gateway.pr-gw.id
   }
+
   tags = {
     Name = "pub-pr-route"
   }
@@ -65,6 +66,8 @@ resource "aws_internet_gateway" "pr-gw" {
  resource "aws_route_table" "pvt-pr-rt" {
   vpc_id = aws_vpc.pr.id
   }
+
   tags = {
-    Name = "pvb-pr-route"
+    Name = "pvt-pr-route"
   }
+  
