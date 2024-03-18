@@ -44,8 +44,27 @@ resource "aws_subnet" "db-sub" {
 # internet gateway
 resource "aws_internet_gateway" "pr-gw" {
   vpc_id = aws_vpc.pr.id
-
   tags = {
     Name = "pr-gw"
   }
 }
+
+ # pub route table
+ resource "aws_route_table" "pub-pr-rt" {
+  vpc_id = aws_vpc.pr.id
+  route {
+    cidr_block = "10.0.0.0/0"
+    gateway_id = aws_internet_gateway.pr-gw.id
+  }
+  tags = {
+    Name = "pub-pr-route"
+  }
+}
+
+ # pvt route table
+ resource "aws_route_table" "pvt-pr-rt" {
+  vpc_id = aws_vpc.pr.id
+  }
+  tags = {
+    Name = "pvb-pr-route"
+  }
