@@ -115,3 +115,7 @@ resource "aws_network_acl" "pr-nacl" {
 
   # Additional rules can be defined as needed
 }
+
+    tags = { 
+        Name "pr-nacl"
+}
