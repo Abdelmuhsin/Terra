@@ -89,8 +89,8 @@ resource "aws_route_table_association" "pr-pub-asoc" {
   route_table_id = aws_route_table.pvt-pr-rt.id
 }
 
-# nacl
-resource "aws_network_acl" "pr-nacl" {
+# nacl web
+resource "aws_network_acl" "pr-web-nacl" {
   vpc_id = aws_vpc.pr.id
 
   # Rules for inbound traffic (ingress)
@@ -113,7 +113,7 @@ resource "aws_network_acl" "pr-nacl" {
     to_port       = 65535
   }
 
-  # Additional rules can be defined as needed
+
 
  tags = {
     Name = "pr-nacl"
@@ -121,4 +121,62 @@ resource "aws_network_acl" "pr-nacl" {
 
 }
 
-   
+ # nacl web
+resource "aws_network_acl" "pr-web-nacl" 
+  vpc_id = aws_vpc.pr.id
+
+  # Rules for inbound traffic (ingress)
+  ingress {
+    rule_no  = 100
+    protocol      = "tcp"
+    action        = "allow"
+    cidr_block    = "0.0.0.0/0"
+    from_port     = 0
+    to_port       = 65535
+  }
+
+  # Rules for outbound traffic (egress)
+  egress {
+    rule_no  = 100
+    protocol      = "tcp"
+    action        = "allow"
+    cidr_block    = "0.0.0.0/0"
+    from_port     = 0
+    to_port       = 65535
+  }
+
+
+
+ tags = {
+    Name = "api-nacl"
+  }
+
+  # nacl db
+resource "aws_network_acl" "pr-db-nacl" 
+  vpc_id = aws_vpc.pr.id
+
+  # Rules for inbound traffic (ingress)
+  ingress {
+    rule_no  = 100
+    protocol      = "tcp"
+    action        = "allow"
+    cidr_block    = "0.0.0.0/0"
+    from_port     = 0
+    to_port       = 65535
+  }
+
+  # Rules for outbound traffic (egress)
+  egress {
+    rule_no  = 100
+    protocol      = "tcp"
+    action        = "allow"
+    cidr_block    = "0.0.0.0/0"
+    from_port     = 0
+    to_port       = 65535
+  }
+
+
+
+ tags = {
+    Name = "db-nacl"
+  }  
