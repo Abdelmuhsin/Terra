@@ -145,8 +145,6 @@ resource "aws_network_acl" "pr-web-nacl"
     to_port       = 65535
   }
 
-
-
  tags = {
     Name = "api-nacl"
   }
@@ -174,8 +172,6 @@ resource "aws_network_acl" "pr-db-nacl"
     from_port     = 0
     to_port       = 65535
   }
-
-
 
  tags = {
     Name = "db-nacl"
