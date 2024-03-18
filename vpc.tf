@@ -70,3 +70,29 @@ resource "aws_route_table" "pvt-pr-rt" {
     Name = "pvt-pr-rt"
   }
 }
+
+# NACL
+resource "aws_network_acl" "pr-acl" {
+  vpc_id = aws_vpc.pr.id
+
+  # Rules for inbound traffic (ingress)
+  ingress {
+    rule_number   = 100
+    protocol      = "tcp"
+    action        = "allow"
+    cidr_block    = "0.0.0.0/0"
+    from_port     = 80
+    to_port       = 80
+  }
+
+  # Rules for outbound traffic (egress)
+  egress {
+    rule_number   = 100
+    protocol      = "tcp"
+    action        = "allow"
+    cidr_block    = "0.0.0.0/0"
+    from_port     = 443
+    to_port       = 443
+  }
+
+}
