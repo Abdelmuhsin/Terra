@@ -117,5 +117,5 @@ resource "aws_network_acl" "pr-nacl" {
 }
 
     tags = { 
-        Name "pr-nacl"
+    Name = "pr-nacl"
 }
