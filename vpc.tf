@@ -88,11 +88,11 @@ resource "aws_network_acl" "pr-acl" {
   # Rules for outbound traffic (egress)
   egress {
     rule_number   = 100
-    protocol      = "tcp"
+    protocol      = "all traffic"
     action        = "allow"
     cidr_block    = "0.0.0.0/0"
-    from_port     = 443
-    to_port       = 443
+    from_port     = all
+    to_port       = all
   }
 
 }
