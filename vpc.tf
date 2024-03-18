@@ -71,28 +71,20 @@ resource "aws_route_table" "pvt-pr-rt" {
   }
 }
 
-# NACL
-resource "aws_network_acl" "pr-acl" {
-  vpc_id = aws_vpc.pr.id
+# rt pub asoc
+ aws_network_aclresource "aws_route_table_association" "a" {
+  subnet_id      = aws_subnet.web-sub.id
+  route_table_id = aws_route_table.pub-pr-rt.id
+}
 
-  # Rules for inbound traffic (ingress)
-  ingress {
-    rule_number   = 100
-    protocol      = "tcp"
-    action        = "allow"
-    cidr_block    = "0.0.0.0/0"
-    from_port     = 80
-    to_port       = 80
-  }
+# rt api asoc
+ aws_network_aclresource "aws_route_table_association" "b" {
+  subnet_id      = aws_subnet.api-sub.id
+  route_table_id = aws_route_table.pub-pr-rt.id
+}
 
-  # Rules for outbound traffic (egress)
-  egress {
-    rule_number   = 100
-    protocol      = "all traffic"
-    action        = "allow"
-    cidr_block    = "0.0.0.0/0"
-    from_port     = all
-    to_port       = all
-  }
-
+# rt db asoc
+ aws_network_aclresource "aws_route_table_association" "c" {
+  subnet_id      = aws_subnet.db-sub.id
+  route_table_id = aws_route_table.pvt-pr-rt.id
 }
