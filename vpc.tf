@@ -68,6 +68,6 @@ resource "aws_internet_gateway" "pr-gw" {
   }
 
   tags = {
-    Name = "pvt-pr-route"
+    Name = "pvt-pr-rt"
   }
   
