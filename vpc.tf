@@ -53,7 +53,7 @@ resource "aws_internet_gateway" "pr-gw" {
  resource "aws_route_table" "pub-pr-rt" {
   vpc_id = aws_vpc.pr.id
   route {
-    cidr_block = "10.0.0.0/0"
+    cidr_block = "0.0.0.0/0"
     gateway_id = aws_internet_gateway.pr-gw.id
   }
 
