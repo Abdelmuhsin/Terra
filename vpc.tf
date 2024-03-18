@@ -62,12 +62,3 @@ resource "aws_internet_gateway" "pr-gw" {
   }
 }
 
- # pvt route table
- resource "aws_route_table" "pvt-pr-rt" {
-  vpc_id = aws_vpc.pr.id
-  }
-
-  tags = {
-    Name = "pvt-pr-rt"
-  }
-  
