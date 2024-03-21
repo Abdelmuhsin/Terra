@@ -67,7 +67,7 @@ resource "aws_route_table" "pub-route" {
 # pvt route table 
 resource "aws_route_table" "pvt-route" {
   vpc_id = aws_vpc.pr-vpc.id
-  
+
   tags = {
     Name = "pvt-route"
   }
@@ -90,4 +90,85 @@ resource "aws_route_table_association" "api-asoc" {
 resource "aws_route_table_association" "db-asoc" {
   subnet_id      = aws_subnet.db-sub.id
   route_table_id = aws_route_table.pvt-route.id
+}
+
+# web nacl
+resource "aws_network_acl" "web-nacl" {
+  vpc_id = aws_vpc.pr-vpc.id
+
+  egress {
+    protocol   = "tcp"
+    rule_no    = 100
+    action     = "allow"
+    cidr_block = "0.0.0.0/0"
+    from_port  = o
+    to_port    = 65535
+  }
+
+  ingress {
+    protocol   = "tcp"
+    rule_no    = 100
+    action     = "allow"
+    cidr_block = "0.0.0.0/0"
+    from_port  = 0
+    to_port    = 65535
+  }
+
+  tags = {
+    Name = "web-nacl"
+  }
+}
+
+# api nacl
+resource "aws_network_acl" "api-nacl" {
+  vpc_id = aws_vpc.pr-vpc.id
+
+  egress {
+    protocol   = "tcp"
+    rule_no    = 100
+    action     = "allow"
+    cidr_block = "0.0.0.0/0"
+    from_port  = o
+    to_port    = 65535
+  }
+
+  ingress {
+    protocol   = "tcp"
+    rule_no    = 100
+    action     = "allow"
+    cidr_block = "0.0.0.0/0"
+    from_port  = 0
+    to_port    = 65535
+  }
+
+  tags = {
+    Name = "api-nacl"
+  }
+}
+
+# db nacl
+resource "aws_network_acl" "db-nacl" {
+  vpc_id = aws_vpc.pr-vpc.id
+
+  egress {
+    protocol   = "tcp"
+    rule_no    = 100
+    action     = "allow"
+    cidr_block = "0.0.0.0/0"
+    from_port  = 0
+    to_port    = 65535
+  }
+
+  ingress {
+    protocol   = "tcp"
+    rule_no    = 100
+    action     = "allow"
+    cidr_block = "0.0.0.0/0"
+    from_port  = 0
+    to_port    = 65535
+  }
+
+  tags = {
+    Name = "db-nacl"
+  }
 }
