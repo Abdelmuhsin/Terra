@@ -64,11 +64,30 @@ resource "aws_route_table" "pub-route" {
   }
 }
 
-# pvt route table
+# pvt route table 
 resource "aws_route_table" "pvt-route" {
   vpc_id = aws_vpc.pr-vpc.id
-
+  
   tags = {
     Name = "pvt-route"
   }
+}
+
+
+# web sub-asoc
+resource "aws_route_table_association" "web-asoc" {
+  subnet_id      = aws_subnet.web-sub.id
+  route_table_id = aws_route_table.pub-route.id
+}
+
+# api sub-asoc
+resource "aws_route_table_association" "api-asoc" {
+  subnet_id      = aws_subnet.api-sub.id
+  route_table_id = aws_route_table.pub-route.id
+}
+
+# db sub-asoc
+resource "aws_route_table_association" "db-asoc" {
+  subnet_id      = aws_subnet.db-sub.id
+  route_table_id = aws_route_table.pvt-route.id
 }
