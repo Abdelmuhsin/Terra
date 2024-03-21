@@ -40,3 +40,12 @@ resource "aws_subnet" "db-sub" {
     Name = "db-sub"
   }
 }
+
+# internet gateway
+resource "aws_internet_gateway" "pr-gateway" {
+  vpc_id = aws_vpc.pr-vpc.id
+
+  tags = {
+    Name = "pr-gateway"
+  }
+}
