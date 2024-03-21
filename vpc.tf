@@ -225,6 +225,7 @@ resource "aws_vpc_security_group_egress_rule" "web-sg-egress" {
   ip_protocol       = "-1" # semantically equivalent to all ports
 }
 
+
 # api security group
 # security group
 resource "aws_security_group" "api-sg" {
@@ -261,7 +262,6 @@ resource "aws_vpc_security_group_egress_rule" "api-sg-egress" {
 }
 
 
-
 # db security group
 # security group
 resource "aws_security_group" "db-sg" {
@@ -285,9 +285,9 @@ resource "aws_vpc_security_group_ingress_rule" "db-sg-ssh" {
 resource "aws_vpc_security_group_ingress_rule" "db-sg-egress-postgress" {
   security_group_id = aws_security_group.db-sg.id
   cidr_ipv4         = "0.0.0.0/0"
-  from_port         = 80
+  from_port         = 5432
   ip_protocol       = "tcp"
-  to_port           = 80
+  to_port           = 5432
 }
 
 #db security group egress 
