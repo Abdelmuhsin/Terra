@@ -191,7 +191,7 @@ resource "aws_network_acl_association" "db-asoc" {
   subnet_id      = aws_subnet.db-sub.id
 }
 
-# security group
+# web security group
 resource "aws_security_group" "web-sg" {
   name        = "web-sg"
   description = "Allow SSH & HTTP traffic"
@@ -221,6 +221,78 @@ resource "aws_vpc_security_group_ingress_rule" "web-sg-http" {
 #web security group egress 
 resource "aws_vpc_security_group_egress_rule" "web-sg-egress" {
   security_group_id = aws_security_group.web-sg.id
+  cidr_ipv4         = "0.0.0.0/0"
+  ip_protocol       = "-1" # semantically equivalent to all ports
+}
+
+# api security group
+# security group
+resource "aws_security_group" "api-sg" {
+  name        = "api-sg"
+  description = "Allow SSH & nodejs traffic"
+  vpc_id      = aws_vpc.pr-vpc.id
+
+  tags = {
+    Name = "api-sg"
+  }
+}
+
+#api security group ingress
+resource "aws_vpc_security_group_ingress_rule" "api-sg-ingress-nodejs" {
+  security_group_id = aws_security_group.api-sg.id
+  cidr_ipv4         = "0.0.0.0/0"
+  from_port         = 22
+  ip_protocol       = "tcp"
+  to_port           = 22
+}
+resource "aws_vpc_security_group_ingress_rule" "api-sg" {
+  security_group_id = aws_security_group.api-sg.id
+  cidr_ipv4         = "0.0.0.0/0"
+  from_port         = 8080
+  ip_protocol       = "tcp"
+  to_port           = 8080
+}
+
+#api security group egress 
+resource "aws_vpc_security_group_egress_rule" "api-sg-egress" {
+  security_group_id = aws_security_group.api-sg.id
+  cidr_ipv4         = "0.0.0.0/0"
+  ip_protocol       = "-1" # semantically equivalent to all ports
+}
+
+
+
+# db security group
+# security group
+resource "aws_security_group" "db-sg" {
+  name        = "db-sg"
+  description = "Allow SSH & HTTP traffic"
+  vpc_id      = aws_vpc.pr-vpc.id
+
+  tags = {
+    Name = "db-sg"
+  }
+}
+
+#db security group ingress
+resource "aws_vpc_security_group_ingress_rule" "db-sg-ssh" {
+  security_group_id = aws_security_group.db-sg.id
+  cidr_ipv4         = "0.0.0.0/0"
+  from_port         = 22
+  ip_protocol       = "tcp"
+  to_port           = 22
+}
+resource "aws_vpc_security_group_ingress_rule" "db-sg-egress-postgress" {
+  security_group_id = aws_security_group.db-sg.id
+  cidr_ipv4         = "0.0.0.0/0"
+  from_port         = 80
+  ip_protocol       = "tcp"
+  to_port           = 80
+}
+
+#db security group egress 
+resource "aws_vpc_security_group_egress_rule" "db-sg-egress" {
+  security_group_id = aws_security_group.db-sg.id
   cidr_ipv4         = "0.0.0.0/0"
   ip_protocol       = "-1" # semantically equivalent to all ports
 }
