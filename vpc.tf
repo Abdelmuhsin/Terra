@@ -172,3 +172,21 @@ resource "aws_network_acl" "db-nacl" {
     Name = "db-nacl"
   }
 }
+
+# web nacl asoc
+resource "aws_network_acl_association" "web-asoc" {
+  network_acl_id = aws_network_acl.web-nacl.id
+  subnet_id      = aws_subnet.web-sub.id
+}
+
+# api nacl asoc
+resource "aws_network_acl_association" "api-asoc" {
+  network_acl_id = aws_network_acl.api-nacl.id
+  subnet_id      = aws_subnet.api-sub.id
+}
+
+# db nacl asoc
+resource "aws_network_acl_association" "db-asoc" {
+  network_acl_id = aws_network_acl.db-nacl.id
+  subnet_id      = aws_subnet.db-sub.id
+}
