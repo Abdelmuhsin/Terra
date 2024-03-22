@@ -3,7 +3,7 @@ resource "aws_instance" "pr-instance" {
   ami           = "ami-01387af90a62e3c01"
   instance_type = "t2.micro"
   subnet_id      = aws_subnet.api-sub.id
-  key_name = "p.pem"
+  key_name = "pr.pem"
   vpc_security_group_ids = [aws_security_group.web-sg.id]
   user_data = file("setup.sh")
    tags = {
