@@ -4,7 +4,7 @@ resource "aws_instance" "pr-instance" {
   instance_type = "t2.micro"
   subnet_id      = aws_subnet.api-sub.id
   key_name = "abd.pem"
-  vpc_security_group_ids = aws_security_group.web-sg.id
+  vpc_security_group_ids = [aws_security_group.web-sg.id]
   user_data = file("setup.sh")
    tags = {
     Name = "pr-instance"
