@@ -6,7 +6,8 @@ resource "aws_instance" "pr-instance" {
   key_name = "abd.pem"
   vpc_security_group_id = aws_security_group.web-sg.id
   user_data = file("setup.sh")
-}
-  tags = {
+   tags = {
     Name = "pr-instance"
   }
+}
+  
